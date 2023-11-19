@@ -11,7 +11,7 @@ from faker import Faker
 fake = Faker()
 
 
-def gen_user_data(num_user_records: int) -> None:
+def gen_user_data(num_user_records):
     for id in range(num_user_records):
         conn = psycopg2.connect(
             dbname="postgres",
