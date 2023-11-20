@@ -1,18 +1,15 @@
-# Stream processinig
+# First Click Attribution Analysis
 
-
-Assume running an e-commerce website. An everyday use case with e-commerce is to identify, for every product purchased, the click that led to this purchase. Attribution is the joining of checkout(purchase) of a product to a click. There are multiple types of **[attribution](https://www.shopify.com/blog/marketing-attribution#3)**; we will focus on `First Click Attribution`. 
+On an e-commerce website, with every product purchased, there's a click led to this purchase. Attribution is the joining of checkout(purchase) of a product to a click. There are multiple types of **[attribution](https://www.shopify.com/blog/marketing-attribution#3)**; we will identify on `First Click Attribution`. 
 
 Our objectives are:
  1. Enrich checkout data with the user name. The user data is in a transactional database.
  2. Identify which click leads to a checkout (aka attribution). For every product checkout, we consider **the earliest click a user made on that product in the previous hour to be the click that led to a checkout**.
  3. Log the checkouts and their corresponding attributed clicks (if any) into a table.
 
-
-
 ## Architecture
 
-Our streaming pipeline architecture is as follows (from left to right):
+Streaming pipeline architecture is as follows:
 
 1. `Application`: Website generates clicks and checkout event data.
 2. `Queue`: The clicks and checkout data are sent to their corresponding Kafka topics.
