@@ -5,7 +5,6 @@ from jinja2 import Environment, FileSystemLoader
 from pyflink.datastream import StreamExecutionEnvironment
 from pyflink.table import StreamTableEnvironment
 
-
 REQUIRED_JARS = [
     "file:///opt/flink/flink-sql-connector-kafka-1.17.0.jar",
     "file:///opt/flink/flink-connector-jdbc-3.0.0-1.16.jar",
@@ -68,7 +67,7 @@ def get_execution_environment(
     s_env = StreamExecutionEnvironment.get_execution_environment()
     for jar in config.jars:
         s_env.add_jars(jar)
-    
+
     s_env.enable_checkpointing(config.checkpoint_interval * 1000)
     s_env.get_checkpoint_config().set_min_pause_between_checkpoints(
         config.checkpoint_pause * 1000
