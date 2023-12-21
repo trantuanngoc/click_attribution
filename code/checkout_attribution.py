@@ -127,6 +127,7 @@ def foreach_batch_function(df, epoch_id):
 
 enrich.writeStream.foreachBatch(
     foreach_batch_function
-    ).start().awaitTermination()
+    ).trigger(processingTime='10 seconds') \
+    .start().awaitTermination()
 
 
