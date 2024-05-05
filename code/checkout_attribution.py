@@ -137,15 +137,15 @@ def foreach_batch_function(df, epoch_id):
     ).save()
 
 
-enrich.writeStream.foreachBatch(
-    foreach_batch_function
-).start().awaitTermination()
+# enrich.writeStream.foreachBatch(
+#     foreach_batch_function
+# ).start().awaitTermination()
 
-# enrich\
-#         .writeStream \
-#         .trigger(processingTime='5 seconds') \
-#         .outputMode("append") \
-#         .option("truncate", "false")\
-#         .format("console") \
-#         .start()\
-#         .awaitTermination()
+enrich\
+        .writeStream \
+        .trigger(processingTime='5 seconds') \
+        .outputMode("append") \
+        .option("truncate", "false")\
+        .format("console") \
+        .start()\
+        .awaitTermination()

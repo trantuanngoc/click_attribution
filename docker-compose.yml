@@ -16,24 +16,6 @@ services:
     command: ["sleep", "infinity"]
     volumes:
       - './code:/opt/spark/code'
-  
-  prometheus:
-    image: prom/prometheus:v2.37.1
-    container_name: prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-
-  grafana:
-    image: grafana/grafana:8.4.0
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=flink
-    volumes:
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
 
   zookeeper:
     image: docker.io/bitnami/zookeeper:3.8
