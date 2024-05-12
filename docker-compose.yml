@@ -1,10 +1,10 @@
 version: '2'
 
 services:
-  spark:
+  spark-job:
     build:
       context: ./container/spark/
-    container_name: spark
+    container_name: spark-job
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -12,18 +12,11 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
       - SPARK_USER=spark
-    user: root
     ports:
       - '8080:8080'
+      - '4040:4040'
     volumes:
       - './code:/opt/spark/code'
-      - ./spark-defaults.conf:/opt/bitnami/spark/conf/spark-defaults.conf
-      - ./jars_dir:/opt/bitnami/spark/ivy:z
-
-    command: ["spark-submit", 
-              "--driver-class-path", "/opt/spark/postgre_jdbc.jar",
-              "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0",
-              "/opt/spark/code/checkout_attribution.py"]
 
   zookeeper:
     image: docker.io/bitnami/zookeeper:3.8
