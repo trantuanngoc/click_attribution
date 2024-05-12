@@ -23,9 +23,8 @@ Streaming pipeline architecture is as follows:
    3. The checkout data is enriched with user information by querying the user table in Postgres.
    4. The checkout data is left joined with the click data( in the cluster state) to see if the checkout can be attributed to a click.
    5. The enriched and attributed checkout data is logged into a Postgres sink table.
-4. `Monitoring & Alerting`: Apache spark metrics are pulled by Prometheus and visualized using Graphana.
 
-![Architecture](./assets/images/arch.png)
+![Architecture](./assets/flow.png)
 
 
 
