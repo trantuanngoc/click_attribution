@@ -113,18 +113,6 @@ enrich = spark.sql(
             AND cl.datetime_occured + INTERVAL '1' HOUR
 """
 )
-# windowSpec = Window.partitionBy(col('cl.user_id'), col('cl.product_id')).orderBy("cl.datetime_occured")
-# enrich = checkout_df2.join(user_df, expr('co.user_id = u.id')).join(click_df2, expr('''co.user_id = cl.user_id AND co.product_id = cl.product_id
-#             AND co.datetime_occured BETWEEN cl.datetime_occured
-#             AND cl.datetime_occured + INTERVAL '1' HOUR'''
-#             ),'left').selectExpr('co.checkout_id', 'u.username AS user_name', 'cl.click_id', 'co.product_id', 'co.payment_method',
-#             'co.total_amount', 'co.shipping_address', 'co.billing_address', 'co.user_agent'
-#             , 'co.ip_address', 'co.datetime_occured AS checkout_time', 'cl.datetime_occured AS click_time')
-
-
-# .withWatermark("checkout_time", "10 seconds") \
-# .dropDuplicates(["checkout_id", "checkout_time"])
-
 
 def foreach_batch_function(df, epoch_id):
     df = df.dropDuplicates(['checkout_id'])
@@ -137,15 +125,8 @@ def foreach_batch_function(df, epoch_id):
     ).save()
 
 
-# enrich.writeStream.foreachBatch(
-#     foreach_batch_function
-# ).start().awaitTermination()
+enrich.writeStream.foreachBatch(
+    foreach_batch_function
+    ).start().awaitTermination()
 
-enrich\
-        .writeStream \
-        .trigger(processingTime='5 seconds') \
-        .outputMode("append") \
-        .option("truncate", "false")\
-        .format("console") \
-        .start()\
-        .awaitTermination()
+
